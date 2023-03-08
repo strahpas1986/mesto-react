@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import {useState, useEffect} from 'react';
 import api from '../utils/api.js';
 import Card from './Card.js';
 
@@ -45,14 +45,11 @@ function Main({onEditProfile, onAddPlace, onEditAvatar, onCardClick}) {
                 <Card 
                   key={card._id}
                   card={card}
-                  link={card.link}
-                  name={card.name}
                   onCardClick={onCardClick}
                 />
               )
             })
-
-            }
+          }
           </section>
         </main>
     )

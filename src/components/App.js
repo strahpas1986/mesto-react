@@ -15,13 +15,13 @@ function App() {
   const [selectedCard, setSelectedCard] = React.useState({});
 
   const handleEditAvatarClick = () => {
-    setIsEditAvatarPopupOpen("popup_opened");
+    setIsEditAvatarPopupOpen(true);
   }
   const handleEditProfileClick = () => {
-    setIsEditProfilePopupOpen("popup_opened");
+    setIsEditProfilePopupOpen(true);
   }
   const handleAddPlaceClick = () => {
-    setIsAddPlacePopupOpen("popup_opened");
+    setIsAddPlacePopupOpen(true);
   } 
   const handleCardClick = (card) => {
     setSelectedCard(card);  
@@ -32,7 +32,6 @@ function App() {
     setIsAddPlacePopupOpen(false);
     setSelectedCard({});
   } 
-
 
   return (
     <div className="App">
