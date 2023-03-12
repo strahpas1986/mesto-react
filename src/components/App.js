@@ -7,12 +7,15 @@ import EditPopupProfile from './EditPopupProfile';
 import EditPopupAvatar from './EditPopupAvatar';
 import EditPopupAddPlace from './EditPopupAddPlace';
 import ImagePopup from './ImagePopup';
+import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
   const [selectedCard, setSelectedCard] = React.useState({});
+  const [currentUser, setCurrentUser] = React.useState({});
+  const [cards, setCards] = React.useState([]);
 
   const handleEditAvatarClick = () => {
     setIsEditAvatarPopupOpen(true);
@@ -36,35 +39,37 @@ function App() {
   return (
     <div className="App">
       <body className="page">
-        <Header />
-        <Main 
-          onEditProfile={handleEditProfileClick}
-          onAddPlace={handleAddPlaceClick}
-          onEditAvatar={handleEditAvatarClick} 
-          onCardClick={handleCardClick}
-        />
-        <Footer />
+        <CurrentUserContext.Provider value={currentUser}>
+          <Header />
+          <Main 
+            onEditProfile={handleEditProfileClick}
+            onAddPlace={handleAddPlaceClick}
+            onEditAvatar={handleEditAvatarClick} 
+            onCardClick={handleCardClick}
+          />
+          <Footer />
 
-        <EditPopupProfile
-          isOpen={isEditProfilePopupOpen}
-          onClose={closeAllPopups}
-        />
+          <EditPopupProfile
+            isOpen={isEditProfilePopupOpen}
+            onClose={closeAllPopups}
+          />
 
-        <EditPopupAvatar
-          isOpen={isEditAvatarPopupOpen}
-          onClose={closeAllPopups}
-        />
+          <EditPopupAvatar
+            isOpen={isEditAvatarPopupOpen}
+            onClose={closeAllPopups}
+          />
 
-        <EditPopupAddPlace
-          isOpen={isAddPlacePopupOpen}
-          onClose={closeAllPopups}
-        />
+          <EditPopupAddPlace
+            isOpen={isAddPlacePopupOpen}
+            onClose={closeAllPopups}
+          />
 
-        <ImagePopup
-          card={selectedCard}
-          onClose={closeAllPopups}
-        />
+          <ImagePopup
+            card={selectedCard}
+            onClose={closeAllPopups}
+          />
       
+        </CurrentUserContext.Provider>
       </body>
     </div>
   );
