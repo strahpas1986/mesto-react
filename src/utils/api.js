@@ -22,13 +22,13 @@ class Api {
 
   //Редактирование профиля
 
-  editProfileInfo(name, about) {
+  editProfileInfo(userData) {
     return fetch(this._serverUrl + '/users/me', {
       method: "PATCH",
       headers: this._headers,
       body: JSON.stringify({
-        name: name,
-        about: about
+        name: `${userData.name}`,
+        about: `${userData.about}`
       }),
     }).then(this._getResponseData);
   }
@@ -57,22 +57,22 @@ class Api {
     .then(this._getResponseData);
   }
 
-  putLike(_id) {
-    return fetch(this._serverUrl + '/cards/' + _id + '/likes', {
-      method: "PUT",
-      headers: this._headers
-    })
-    .then(this._getResponseData);
+  likeCardStatus(_id, isLiked) {
+    if (isLiked) {
+      return fetch(this._serverUrl + '/cards/' + _id + '/likes', {
+        method: "DELETE",
+        headers: this._headers
+      })
+      .then(this._getResponseData);
+    } else {
+      return fetch(this._serverUrl + '/cards/' + _id + '/likes', {
+        method: "PUT",
+        headers: this._headers
+      })
+      .then(this._getResponseData);
+    }
   }
-
-  deleteLike(_id) {
-    return fetch(this._serverUrl + '/cards/' + _id + '/likes', {
-      method: "DELETE",
-      headers: this._headers
-    })
-    .then(this._getResponseData);
-  }
-
+ 
   changeAvatar(avatar) {
     return fetch(this._serverUrl + '/users/me/avatar', {
       method: "PATCH",
@@ -93,7 +93,7 @@ class Api {
   }
 }
 
-const api = new Api({
+export const api = new Api({
   serverUrl: "https://mesto.nomoreparties.co/v1/cohort-59",
   headers: {
     authorization: "b185719c-abff-4277-81cb-becf6d2eb2bf",
@@ -101,4 +101,3 @@ const api = new Api({
   },
 });
 
-export default api;

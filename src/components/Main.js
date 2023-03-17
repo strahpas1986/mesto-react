@@ -1,27 +1,9 @@
 import { useContext } from 'react';
-// import api from '../utils/api.js';
 import Card from './Card.js';
-import { CurrentUserContext } from '../contexts/CurrentUserContext.js';
+import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
-function Main({cards, onEditProfile, onAddPlace, onEditAvatar, onCardClick}) {
-  // const [userName, setUserName] = useState("");
-  // const [userDescription, setUserDescription] = useState("");
-  // const [userAvatar, setUserAvatar] = useState("");
-  // const [cards, setCards] = useState([]);
-
-  // useEffect(() => {
-  //   Promise.all([api.getUserInfo(), api.getInitialCards()])
-  //     .then(([data, cards]) => {
-  //       setUserName(data.name);
-  //       setUserDescription(data.about);
-  //       setUserAvatar(data.avatar);
-  //       setCards(cards);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // }, []);
-
+function Main({cards, onEditProfile, onAddPlace, onEditAvatar, onCardClick, onCardLike, onCardDelete}) {
+  
   const currentUser = useContext(CurrentUserContext);
 
   return (
@@ -49,6 +31,8 @@ function Main({cards, onEditProfile, onAddPlace, onEditAvatar, onCardClick}) {
                   key={card._id}
                   card={card}
                   onCardClick={onCardClick}
+                  onCardLike={onCardLike}
+                  onCardDelete={onCardDelete}
                 />
               )
             })
