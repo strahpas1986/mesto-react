@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import PopupWithForm from "./PopupWithForm";
 import Validation from '../utils/Validation';
 
-function EditPopupAddPlace({isOpen, onClose, onAddPlace, onLoading }) {
+function AddPlacePopup({isOpen, onClose, onAddPlace, onLoading }) {
   const { values, errors, isFormValid, onChange, resetValidation } = Validation();  
   useEffect(() => {
     resetValidation();
@@ -67,4 +67,4 @@ function EditPopupAddPlace({isOpen, onClose, onAddPlace, onLoading }) {
     )
 }
 
-export default EditPopupAddPlace;
+export default AddPlacePopup;

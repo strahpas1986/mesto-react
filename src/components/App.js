@@ -5,7 +5,7 @@ import Main from './Main';
 import Footer from './Footer';
 import EditProfilePopup from './EditProfilePopup';
 import EditAvatarPopup from './EditAvatarPopup';
-import EditPopupAddPlace from './EditPopupAddPlace';
+import AddPlacePopup from './AddPlacePopup';
 import DeleteCardPopup from './DeleteCardPopup';
 import ImagePopup from './ImagePopup';
 import { api } from '../utils/api';
@@ -181,7 +181,7 @@ function App() {
             onUpdateAvatar={handleUpdateAvatar}
             onLoading={isEditAvatarPopupOnLoading}
           />
-          <EditPopupAddPlace
+          <AddPlacePopup
             isOpen={isAddPlacePopupOpen}
             onClose={closeAllPopups}
             onAddPlace={handleAddPlacePopup}
