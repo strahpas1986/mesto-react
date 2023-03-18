@@ -13,7 +13,7 @@ import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
-  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
+  const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = useState(false);
   const [isEditProfilePopupOnLoading, setEditProfilePopupButtonText] = useState(false);
   const [isEditAvatarPopupOnLoading, setEditAvatarPopupButtonText] = useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
@@ -48,7 +48,7 @@ function App() {
   }, []);
 
   const handleEditAvatarClick = () => {
-    setIsEditAvatarPopupOpen(true);
+    setEditAvatarPopupOpen(true);
   }
   const handleEditProfileClick = () => {
     setIsEditProfilePopupOpen(true);
@@ -67,7 +67,7 @@ function App() {
   };
 
   const closeAllPopups = () => {
-    setIsEditAvatarPopupOpen(false);
+    setEditAvatarPopupOpen(false);
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
     setSelectedCard({});

@@ -17,8 +17,8 @@ function DeleteCardPopup({ isOpen, onClose, onDeleteCard, onLoading, card }) {
 
     return (
         <PopupWithForm
-            name="popup__form_delete_card"
-            title="Вы уверены?"
+            name="delete-card"
+            subtitle="Вы уверены?"
             buttonText={onLoading ? "Удаление..." : "Да"}
             isOpen={isOpen}
             onClose={onClose}

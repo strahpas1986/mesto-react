@@ -35,13 +35,13 @@ class Api {
 
   //Добавление новой карточки
 
-  addNewCard(name, link) {
+  addNewCard(cardData) {
     return fetch(this._serverUrl + "/cards", {
       method: "POST",
       headers: this._headers,
       body: JSON.stringify({
-        name: name,
-        link: link
+        name: `${cardData.name}`,
+        link: `${cardData.link}`
       }),
     })
     .then(this._getResponseData);
@@ -78,7 +78,7 @@ class Api {
       method: "PATCH",
       headers: this._headers,
       body: JSON.stringify({
-        avatar: avatar
+        avatar: `${avatar.avatar}`
       })
     })
     .then(this._getResponseData);

@@ -7,15 +7,10 @@ import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
 function EditProfilePopup({ isOpen, onClose, onUpdateUser, onLoading }) {
     const { values, errors, isFormValid, onChange, resetValidation } = Validation();
-    // const [name, setName] = useState("");
-    // // const [value, setValue] = useState({});
-    // const [description, setDescription] = useState("");
     const currentUser = useContext(CurrentUserContext);
 
     
     useEffect(() => {
-      // setName(currentUser.name);
-      // setDescription(currentUser.about);
       resetValidation(true, currentUser);
     }, [currentUser, isOpen, resetValidation]);
 
@@ -24,17 +19,7 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser, onLoading }) {
         onUpdateUser(values);
     }
 
-    // const handleNameChange = (e) => {
-    //   e.preventDefault();
-    //   setName(e.target.value);
-    // }
-
-    // const handleDescription = (e) => {
-    //   e.preventDefault();
-    //   setDescription(e.target.value);
-    // }
-      
-      return (
+    return (
         <PopupWithForm
           name="name"
           subtitle="Редактировать профиль"
@@ -85,7 +70,7 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser, onLoading }) {
           </label>          
         
       </PopupWithForm>
-      );  
+    );  
 } 
 
 export default EditProfilePopup;
