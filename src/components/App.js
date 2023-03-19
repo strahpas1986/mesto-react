@@ -70,6 +70,7 @@ function App() {
     setEditAvatarPopupOpen(false);
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
+    setDeleteCardPopupClass(false);
     setSelectedCard({});
     setCardToDelete({});
   } 
@@ -141,7 +142,7 @@ function App() {
     setAddPlacePopupButtonText(true);
     api.addNewCard(card)
       .then((newCards) => {
-        setCards([...cards, newCards]);
+        setCards([newCards, ...cards]);
       })
       .then(() => {
         closeAllPopups();
@@ -156,7 +157,7 @@ function App() {
 
   return (
     <div className="App">
-      <body className="page">
+      <div className="page">
         <CurrentUserContext.Provider value={currentUser}>
           <Header />
           <Main 
@@ -200,7 +201,7 @@ function App() {
           />         
       
         </CurrentUserContext.Provider>
-      </body>
+      </div>
     </div>
   );
 }

@@ -1,9 +1,9 @@
 import { useEffect } from "react";
 import PopupWithForm from "./PopupWithForm";
-import Validation from '../utils/Validation';
+import useValidation from '../utils/useValidation';
 
 function AddPlacePopup({isOpen, onClose, onAddPlace, onLoading }) {
-  const { values, errors, isFormValid, onChange, resetValidation } = Validation();  
+  const { values, errors, isFormValid, onChange, resetValidation } = useValidation();  
   useEffect(() => {
     resetValidation();
   }, [isOpen, resetValidation]);
@@ -25,7 +25,7 @@ function AddPlacePopup({isOpen, onClose, onAddPlace, onLoading }) {
           buttonText={onLoading ? "Сохранение..." : "Сохранить"}
           isFormValid={isFormValid} 
         >
-            <label>
+            <label className="popup__wrapper">
               <input
                   name="name"
                   id="form-element"
@@ -35,8 +35,8 @@ function AddPlacePopup({isOpen, onClose, onAddPlace, onLoading }) {
                   className={`popup__input ${
                     errors.name ? "popup__input_form_type_error" : ""
                   }`}
-                  minlength="1"
-                  maxlength="30"
+                  minLength="1"
+                  maxLength="30"
                   value={values.name || ""}
                   onChange={onChange}
                 />
@@ -45,7 +45,7 @@ function AddPlacePopup({isOpen, onClose, onAddPlace, onLoading }) {
                 }`}>{errors.name || ""}</span>
             </label>
 
-            <label>
+            <label className="popup__wrapper">
               <input
                   name="link"
                   id="link-element"

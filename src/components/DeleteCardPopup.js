@@ -1,10 +1,10 @@
 import { useEffect } from "react";
-import Validation from "../utils/Validation";
+import useValidation from "../utils/useValidation";
 
 import PopupWithForm from "./PopupWithForm";
 
 function DeleteCardPopup({ isOpen, onClose, onDeleteCard, onLoading, card }) {
-    const { isFormValid, resetValidation } = Validation();
+    const { isFormValid, resetValidation } = useValidation();
 
     useEffect(() => {
         resetValidation(true);

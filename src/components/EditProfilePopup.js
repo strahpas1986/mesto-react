@@ -1,12 +1,12 @@
 import { useEffect, useContext } from "react";
-import Validation from '../utils/Validation';
+import useValidation from '../utils/useValidation';
 
 import PopupWithForm from "./PopupWithForm";
 
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
 function EditProfilePopup({ isOpen, onClose, onUpdateUser, onLoading }) {
-    const { values, errors, isFormValid, onChange, resetValidation } = Validation();
+    const { values, errors, isFormValid, onChange, resetValidation } = useValidation();
     const currentUser = useContext(CurrentUserContext);
 
     
@@ -39,8 +39,8 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser, onLoading }) {
                   className={`popup__input ${
                     errors.name ? "popup__input_type_error" : ""
                   }`}
-                  minlength="2"
-                  maxlength="40"
+                  minLength="2"
+                  maxLength="40"
                   value={values.name || ""}
                   onChange={onChange}
               />
@@ -59,8 +59,8 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser, onLoading }) {
                   className={`popup__input ${
                     errors.about ? "popup__input_type_error" : ""
                   }`}
-                  minlength="2"
-                  maxlength="200"
+                  minLength="2"
+                  maxLength="200"
                   value={values.about || ""}
                   onChange={onChange}
               />
