@@ -1,21 +1,17 @@
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import useValidation from "../utils/useValidation";
 
 import PopupWithForm from "./PopupWithForm";
 
 function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar, onLoading }) {
   const { values, errors, isFormValid, onChange, resetValidation } = useValidation();  
-  const inputRef = useRef();
     useEffect(() => {
       resetValidation();
-      inputRef.current.value = "";
     }, [isOpen, resetValidation])
 
     function handleSubmit(e) {
         e.preventDefault();
-        onUpdateAvatar({
-          avatar: inputRef.current.value,
-        });
+        onUpdateAvatar(values);
     } 
 
     return (
@@ -38,7 +34,6 @@ function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar, onLoading }) {
                   className={`popup__input ${
                     errors.about ? "popup__input_type_error" : ""
                   }`}
-                  ref={inputRef}
                   onChange={onChange}
                   value={values.avatar || ""}
                 />

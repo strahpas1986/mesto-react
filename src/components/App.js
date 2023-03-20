@@ -37,15 +37,22 @@ function App() {
       
   }, []);
 
+  const isOpen = isEditAvatarPopupOpen || isEditProfilePopupOpen || isAddPlacePopupOpen || selectedCard.link
+
   useEffect(() => {
-    function handleEscClose(e) {
-      if (e.key === "Escape") {
+    function closeByEscape(evt) {
+      if(evt.key === 'Escape') {
         closeAllPopups();
       }
     }
-    window.addEventListener("keydown", handleEscClose);
-    return () => window.removeEventListener("keydown", handleEscClose);
-  }, []);
+      if(isOpen) { // навешиваем только при открытии
+        document.addEventListener('keydown', closeByEscape);
+        return () => {
+          document.removeEventListener('keydown', closeByEscape);
+        }
+      }
+    }, [isOpen]) 
+
 
   const handleEditAvatarClick = () => {
     setEditAvatarPopupOpen(true);
@@ -104,7 +111,6 @@ function App() {
       })
       .finally(() => {
         setDeleteCardPopupButtonText(false);
-        setCardToDelete({});
       });
   }
 

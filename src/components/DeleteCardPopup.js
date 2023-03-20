@@ -4,7 +4,7 @@ import useValidation from "../utils/useValidation";
 import PopupWithForm from "./PopupWithForm";
 
 function DeleteCardPopup({ isOpen, onClose, onDeleteCard, onLoading, card }) {
-    const { isFormValid, resetValidation } = useValidation();
+    const { resetValidation } = useValidation();
 
     useEffect(() => {
         resetValidation(true);
@@ -23,7 +23,7 @@ function DeleteCardPopup({ isOpen, onClose, onDeleteCard, onLoading, card }) {
             isOpen={isOpen}
             onClose={onClose}
             onSubmit={handleSubmit}
-            isFormValid={isFormValid}
+            isFormValid={true}
         />
     )
 }
