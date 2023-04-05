@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { Route, Routes, useNavigate } from 'react-router-dom';
+import { Route, Routes, useNavigate, Navigate } from 'react-router-dom';
 import '../index.css';
 import Header from './Header';
 import * as authApi from '../utils/authApi';
@@ -53,6 +53,23 @@ function App() {
 
   }, [loggedIn]);
 
+  // useEffect(() => {
+  //   const jwt = localStorage.getItem('jwt');
+  //   if (jwt) {
+  //     authApi.getContent(jwt)
+  //       .then((res) => {
+  //         if (res) {
+  //           setLoggedIn(true);
+  //           setEmail(res.data.email);
+  //           navigate('/', { replace: true });
+  //         }
+  //       })
+  //       .catch((err) => {
+  //         console.error(err);
+  //       })
+  //   }
+  // }, [navigate]);
+
   const isOpen = isEditAvatarPopupOpen || isEditProfilePopupOpen || isAddPlacePopupOpen || selectedCard.link
 
   useEffect(() => {
@@ -69,10 +86,10 @@ function App() {
       }
     }, [isOpen]);
 
-  const cbRegister = useCallback( async(userData) => {
+  const cbRegister = useCallback( async({ email, password}) => {
     setIsLoading(true);
     try {
-      const data = await authApi.register(userData);
+      const data = await authApi.register({ email, password});
       if (data) {
         setInfoTooltipImage(succes);
         setInfoTooltipTitle('Вы успешно зарегистрировались!');
@@ -87,14 +104,14 @@ function App() {
     }
   }, [navigate]);
 
-  const cbAuthorize = useCallback(async (userData) => {
+  const cbAuthorize = useCallback(async ({ email, password}) => {
     setIsLoading(true);
     try {
-      const data = await authApi.authorize(userData);
+      const data = await authApi.authorize({ email, password});
       if (data.token) {
         localStorage.setItem("token", data.token);
         setLoggedIn(true);
-        setEmail(userData.email);
+        setEmail(data.email);
         navigate('/', { replace: true });
       }
     } catch (err) {
@@ -127,7 +144,7 @@ function App() {
     localStorage.removeItem('token');
     setLoggedIn(false);
     setEmail('');
-    navigate('/sign-in', { replace: true });
+    navigate('/sign-up', { replace: true });
   }, [navigate]);
 
   useEffect(() => {
@@ -265,16 +282,18 @@ function App() {
               path="/sign-up"
               element={
                 <>
-                  <Register onRegister={cbRegister} />
+                  <Register onRegister={cbRegister} onLoading={isLoading} />
                 </>
               }
             />
+            <Route path="*" element={<Navigate to="/" />} />
             <Route
               path="/"
               element={
                 <>
-                  <ProtectedRouteElement exact path="/" loggedIn={loggedIn}>
-                  <Main
+                  <ProtectedRouteElement
+                    component = {Main}
+                    loggedIn={loggedIn}
                     cards={cards}
                     onEditProfile={handleEditProfileClick}
                     onAddPlace={handleAddPlaceClick}
@@ -283,13 +302,12 @@ function App() {
                     onCardLike={handleCardLike}
                     onCardDelete={handleDeleteClick}
                   />
-                  <Footer />
-                </ProtectedRouteElement>
                 </>
               }
             />
 
           </Routes>
+          <Footer />
               <EditProfilePopup
                 isOpen={isEditProfilePopupOpen}
                 onClose={closeAllPopups}

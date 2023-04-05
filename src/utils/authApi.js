@@ -16,11 +16,11 @@ function makeRequest(url, method, body, token) {
   });
 }
 
-export function register({ password, email }) {
+export function register({ email, password }) {
   return makeRequest("/signup", "POST", { password, email });
 }
 
-export function authorize({ password, email }) {
+export function authorize({ email, password }) {
   return makeRequest("/signin", "POST", { password, email });
 }
 

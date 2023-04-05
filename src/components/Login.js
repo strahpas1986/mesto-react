@@ -7,7 +7,7 @@ const Login = (props) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        onLogin(email, password);
+        onLogin({email, password});
     }
 
     return (
