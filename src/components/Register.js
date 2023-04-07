@@ -16,24 +16,20 @@ const Register = (props) => {
         <h2 className="root__title">Регистрация</h2>
         <form action="#" className="root__form" onSubmit={handleSubmit}>
             <div className="root__input-wrapper">
-            <label htmlFor="email" className="root__label" />
-            <input
-                type="email"
-                className="root__input"
-                id="email"
-                placeholder="Email"
-                onChange={(evt) => setEmail(evt.target.value)}
-            />
-            </div>
-            <div className="root__input-wrapper">
-            <label htmlFor="password" className="auth__label" />
-            <input
-                type="password"
-                className="root__input"
-                id="password"
-                placeholder="Пароль"
-                onChange={(evt) => setPassword(evt.target.value)}
-            />
+              <input
+                  type="email"
+                  className="root__input"
+                  id="email"
+                  placeholder="Email"
+                  onChange={(evt) => setEmail(evt.target.value)}
+              />
+              <input
+                  type="password"
+                  className="root__input"
+                  id="password"
+                  placeholder="Пароль"
+                  onChange={(evt) => setPassword(evt.target.value)}
+              />
             </div>
             <button className="root__submit">Зарегистрироваться</button>
         </form>

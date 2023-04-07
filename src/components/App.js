@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { Route, Routes, useNavigate, Navigate } from 'react-router-dom';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 import '../index.css';
 import Header from './Header';
 import * as authApi from '../utils/authApi';
@@ -38,7 +38,6 @@ function App() {
   const [isDeleteCardPopupOnLoading, setDeleteCardPopupButtonText] = useState(false)
   const [currentUser, setCurrentUser] = useState({});
   const [cards, setCards] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     loggedIn &&
@@ -52,23 +51,6 @@ function App() {
       })
 
   }, [loggedIn]);
-
-  // useEffect(() => {
-  //   const jwt = localStorage.getItem('jwt');
-  //   if (jwt) {
-  //     authApi.getContent(jwt)
-  //       .then((res) => {
-  //         if (res) {
-  //           setLoggedIn(true);
-  //           setEmail(res.data.email);
-  //           navigate('/', { replace: true });
-  //         }
-  //       })
-  //       .catch((err) => {
-  //         console.error(err);
-  //       })
-  //   }
-  // }, [navigate]);
 
   const isOpen = isEditAvatarPopupOpen || isEditProfilePopupOpen || isAddPlacePopupOpen || selectedCard.link
 
@@ -87,7 +69,7 @@ function App() {
     }, [isOpen]);
 
   const cbRegister = useCallback( async({ email, password}) => {
-    setIsLoading(true);
+
     try {
       const data = await authApi.register({ email, password});
       if (data) {
@@ -97,39 +79,38 @@ function App() {
       }
     } catch (err) {
       console.error(err);
+      handleInfoTooltip();
       setInfoTooltipImage(error);
       setInfoTooltipTitle('Что-то пошло не так! Попробуйте ещё раз.');
     } finally {
-      setIsLoading(false);
+      handleInfoTooltip();
     }
   }, [navigate]);
 
-  const cbAuthorize = useCallback(async ({ email, password}) => {
-    setIsLoading(true);
+  const cbAuthorize = useCallback(async ({ email, password }) => {
     try {
-      const data = await authApi.authorize({ email, password});
+      const data = await authApi.authorize({ email, password });
       if (data.token) {
         localStorage.setItem("token", data.token);
         setLoggedIn(true);
-        setEmail(data.email);
+        setEmail(email);
         navigate('/', { replace: true });
       }
     } catch (err) {
       console.error(err);
+      handleInfoTooltip();
       setInfoTooltipImage(error);
       setInfoTooltipTitle('Что-то пошло не так! Попробуйте ещё раз.');
-    } finally {
-      setIsLoading(false);
     }
   }, [navigate]);
 
   const cbTokenCheck = useCallback(async () => {
-    const token = localStorage.getItem('token');
-    if (token) {
+    const jwt = localStorage.getItem('token');
+    if (jwt) {
       try {
-        const user = await authApi.getContent(token);
+        const user = await authApi.getContent(jwt);
         if (!user) {
-          throw new Error("Данные пользователя отсутствует");
+          throw new Error("Данные пользователя отсутствуют");
         }
         setEmail(user.data.email);
         setLoggedIn(true);
@@ -138,18 +119,22 @@ function App() {
         console.error(err);
       }
     }
-  }, [navigate]);
+  }, []);
 
   const cbLogOut = useCallback(() => {
     localStorage.removeItem('token');
     setLoggedIn(false);
     setEmail('');
-    navigate('/sign-up', { replace: true });
+    navigate('/sign-in', { replace: true });
   }, [navigate]);
 
   useEffect(() => {
     cbTokenCheck();
   }, [cbTokenCheck])
+
+  const handleInfoTooltip = () => {
+    setInfoTooltip(true);
+  }
 
   const handleEditAvatarClick = () => {
     setEditAvatarPopupOpen(true);
@@ -271,10 +256,26 @@ function App() {
           />
           <Routes>
             <Route
+              path="/"
+              element={
+                <ProtectedRouteElement
+                  component={Main}
+                  cards={cards}
+                  onEditProfile={handleEditProfileClick}
+                  onAddPlace={handleAddPlaceClick}
+                  onEditAvatar={handleEditAvatarClick}
+                  onCardClick={handleCardClick}
+                  onCardLike={handleCardLike}
+                  onCardDelete={handleDeleteClick}
+                  loggedIn={loggedIn}
+                />
+              }
+            />
+            <Route
               path="/sign-in"
               element={
                 <>
-                  <Login onLogin={cbAuthorize} onLoading={isLoading} />
+                  <Login onLogin={cbAuthorize} />
                 </>
               }
             />
@@ -282,30 +283,10 @@ function App() {
               path="/sign-up"
               element={
                 <>
-                  <Register onRegister={cbRegister} onLoading={isLoading} />
+                  <Register onRegister={cbRegister} />
                 </>
               }
             />
-            <Route path="*" element={<Navigate to="/" />} />
-            <Route
-              path="/"
-              element={
-                <>
-                  <ProtectedRouteElement
-                    component = {Main}
-                    loggedIn={loggedIn}
-                    cards={cards}
-                    onEditProfile={handleEditProfileClick}
-                    onAddPlace={handleAddPlaceClick}
-                    onEditAvatar={handleEditAvatarClick}
-                    onCardClick={handleCardClick}
-                    onCardLike={handleCardLike}
-                    onCardDelete={handleDeleteClick}
-                  />
-                </>
-              }
-            />
-
           </Routes>
           <Footer />
               <EditProfilePopup

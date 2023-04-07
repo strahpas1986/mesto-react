@@ -1,7 +1,4 @@
 .root__input-wrapper {
-
+  margin-top: 50px;
 }
 
-.root__input-wrapper:last-child {
-    margin-bottom: 30px;
-}

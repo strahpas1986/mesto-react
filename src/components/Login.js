@@ -15,26 +15,27 @@ const Login = (props) => {
             <h2 className="root__title">Вход</h2>
             <form action="#" className="root__form" onSubmit={handleSubmit}>
                 <div className="root__input-wrapper">
-                <label htmlFor="email" className="root__label" />
                 <input
                     type="email"
                     className="root__input"
                     id="email"
                     placeholder="Email"
+                    autoComplete="none"
                     onChange={(evt) => setEmail(evt.target.value)}
                 />
-                </div>
-                <div className="root__input-wrapper">
-                <label htmlFor="password" className="auth__label" />
                 <input
                     type="password"
                     className="root__input"
                     id="password"
                     placeholder="Пароль"
+                    autoComplete="none"
                     onChange={(evt) => setPassword(evt.target.value)}
                 />
                 </div>
-                <button className="root__submit">Войти</button>
+                {/* <div className="root__input-wrapper">
+
+                </div> */}
+                <button className="root__submit" type="submit">Войти</button>
             </form>
         </section>
     )
